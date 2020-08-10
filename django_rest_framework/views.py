@@ -19,7 +19,7 @@ class IsTokenValid(BasePermission):
             token_blocked = BlackListedToken.objects.filter(user_id=user_id, token=token)
             if token_blocked:
                 is_allowed_user = False
-        except BlackListedToken.DoesNotExist:
+        except token_blocked.DoesNotExist:
             is_allowed_user = True
         return  is_allowed_user
 
@@ -143,7 +143,6 @@ class getTokenDetail(RetrieveAPIView):
 
 
 class logOut(RetrieveAPIView):
-
     permission_classes = (IsAuthenticated, IsTokenValid)
     authentication_classes = [JSONWebTokenAuthentication]
     serializer_class = UserLogoutSerializer
